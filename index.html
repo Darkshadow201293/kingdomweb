@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نقابة STAR</title>
+    <style>
+        /* الخلفية الرئيسية */
+        body {
+            background-image: url('https://images8.alphacoders.com/430/430276.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* نص التنبيه */
+        #text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* الرموز التعبيرية */
+        .emoji {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        /* صندوق الإدخال */
+        .input-box {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+            box-sizing: border-box;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        /* الأزرار */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        button {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 2px solid #FFC107;
+            background-color: #FFC107;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #FFB300;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #FFA000;
+            transform: scale(0.95);
+        }
+
+        /* زر العودة */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* قائمة المستخدمين */
+        .user-list {
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        /* عنصر المستخدم */
+        .user {
+            background-color: #4E342E;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        /* دور المستخدم */
+        .user .role {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: #FFD700;
+            color: #3E2723;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* نقطة الإشعار */
+        .user .notification-dot {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 10px;
+            height: 10px;
+            background-color: #E53935;
+            border-radius: 50%;
+            display: none;
+        }
+
+        /* تذييل الصفحة */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 18px;
+            color: #FFD700;
+            font-family: 'Cursive', serif;
+        }
+
+        /* إشعار */
+        .notification {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2C3E50;
+            color: #ECF0F1;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            text-align: center;
+            max-width: 80%;
+            width: 350px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .notification.hidden {
+            display: none;
+        }
+
+        .notification-content p {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .notification-content button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background-color: #E67E22;
+            color: #FFFFFF;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .notification-content button:hover {
+            background-color: #D35400;
+            transform: scale(1.05);
+        }
+
+        .notification-content button:active {
+            background-color: #BF5C00;
+            transform: scale(0.95);
+        }
+
+        /* صندوق الرموز */
+        .code-box {
+            background-color: #4E342E;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            text-align: center;
+            user-select: none;
+        }
+
+        /* عناصر الشراء */
+        .purchases {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #FFD700;
+            color: #3E2723;
+            cursor: pointer;
+        }
+
+        .purchase-item {
+            margin: 8px 0;
+            padding: 8px;
+            background-color: #4E342E;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .purchase-item .remaining-time {
+            font-size: 14px;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" id="back-button" onclick="goBack()">
+        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/left.png" alt="رجوع">
+    </button>
+
+    <div id="main-container">
+        <div id="text">مرحبا بكم في نقابة STAR</div>
+        <div class="emoji">🌟🌟</div>
+        <div class="input-box" id="input-box">
+            <p>يرجى الضغط على زر ابدأ للتسجيل:</p>
+            <div class="button-container">
+                <button id="start-button" onclick="start()">ابدأ</button>
+                <button id="store-button" onclick="showStoreInput()">متجر</button>
+                <button id="bank-button" onclick="showBankLogin()">بنك</button>
+                <button id="developer-button" onclick="showDeveloperLogin()">المطور</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">BY: ZEREF</div>
+
+    <!-- إشعار المستخدم -->
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <p id="notification-message">تم التسجيل بنجاح!</p>
+            <button onclick="closeNotification()">حسناً</button>
+        </div>
+    </div>
+
+    <!-- تأكيد الشراء -->
+    <div id="confirmation" class="notification hidden">
+        <div class="notification-content">
+            <p id="confirmation-message">هل أنت متأكد من الشراء؟</p>
+            <button onclick="confirmPurchase(true)">نعم</button>
+            <button onclick="confirmPurchase(false)">لا</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBM6SrDiJydqVKu785iyGDZgg444bwbOVw",
+            authDomain: "forland-f4965.firebaseapp.com",
+            databaseURL: "https://forland-f4965-default-rtdb.firebaseio.com/",
+            projectId: "forland-f4965",
+            storageBucket: "forland-f4965.appspot.com",
+            messagingSenderId: "1080164669461",
+            appId: "1:1080164669461:web:25aac1fdea2b61f817d61c",
+            measurementId: "G-R0WVT7NQVE"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.analytics();
+        var database = firebase.database();
+
+        let stepStack = [];
+        let currentPurchase = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let index = 0;
+
+            function typeText() {
+                if (index < textElement.textContent.length) {
+                    textElement.innerHTML += textElement.textContent.charAt(index);
+                    index++;
+                    setTimeout(typeText, 50);
+                }
+            }
+            typeText();
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    document.getElementById('start-button').click();
+                }
+            });
+        });
+
+        function start() {
+            stepStack.push(document.getElementById('input-box').innerHTML);
+            askIfAdmin();
+            showBackButton();
+        }
+
+        function askIfAdmin() {
+            stepStack.push(document.getElementById('input-box').innerHTML);
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>هل أنت مشرف في STAR?</p>
+                <div class="button-container">
+                    <button onclick="isAdmin(true)">نعم</button>
+                    <button onclick="isAdmin(false)">لا</button>
+                </div>
+            `;
+            showBackButton();
+        }
+
+        function isAdmin(isAdmin) {
+            stepStack.push(document.getElementById('input-box').innerHTML);
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = '';
+            if (isAdmin) {
+                inputBox.innerHTML = `
+                    <p>الرجاء إدخال كلمة المرور:</p>
+                    <input type="password" id="adminPassword" placeholder="كلمة المرور">
+                    <button onclick="checkAdminPassword()">تحقق</button>
+                `;
+            } else {
+                showRegistrationForm();
+            }
+        }
+
+        function checkAdminPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === 'starzyi') {
+                showAdminPanel();
+            } else {
+                showNotification('كلمة مرور غير صحيحة');
+            }
+        }
+
+        function showAdminPanel() {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>لوحة تحكم المشرف</p>
+                <div id="userList" class="user-list"></div>
+                <button onclick="deleteAllUsers()">حذف الجميع</button>
+            `;
+            showBackButton();
+            loadUsers();
+        }
+
+        function showRegistrationForm() {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>الرجاء إدخال بيانات المستخدم:</p>
+                <input type="text" id="userName" placeholder="اللقب">
+                <input type="text" id="userPhoneNumber" placeholder="رقم الهاتف">
+                <div class="country-code-container">
+                    <label for="countryCode">رمز الدولة:</label>
+                    <select id="countryCode"></select>
+                </div>
+                <input type="text" id="referrerName" placeholder="من طرف (اللقب)">
+                <button onclick="registerUser()">تسجيل</button>
+            `;
+            populateCountryCodes();
+            showBackButton();
+        }
+
+        function populateCountryCodes() {
+            const countryCodes = {
+                "مصر": "+20",
+                "السعودية": "+966",
+                "الإمارات": "+971",
+                "الأردن": "+962",
+                "لبنان": "+961",
+                "فلسطين": "+970",
+                "الكويت": "+965",
+                "عمان": "+968",
+                "البحرين": "+973",
+                "الجزائر": "+213",
+                "المغرب": "+212",
+                "تونس": "+216",
+                "ليبيا": "+218",
+                "السودان": "+249",
+                "موريتانيا": "+222",
+                "اليمن": "+967"
+            };
+
+            const countryCodeSelect = document.getElementById('countryCode');
+            for (const [country, code] of Object.entries(countryCodes)) {
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = `${country} (${code})`;
+                countryCodeSelect.appendChild(option);
+            }
+        }
+
+        function registerUser() {
+            const name = document.getElementById('userName').value.trim();
+            const phoneNumber = document.getElementById('userPhoneNumber').value.trim();
+            const countryCode = document.getElementById('countryCode').value;
+            const fullPhoneNumber = countryCode + phoneNumber;
+            const referrerName = document.getElementById('referrerName').value.trim();
+
+            if (name === '') {
+                showNotification('اللقب مطلوب');
+                return;
+            }
+
+            if (phoneNumber === '') {
+                showNotification('رقم الهاتف مطلوب');
+                return;
+            }
+
+            if (referrerName === '') {
+                showNotification('حقل من طرف مطلوب');
+                return;
+            }
+
+            database.ref('users').once('value', snapshot => {
+                let isNameTaken = false;
+                let isPhoneNumberTaken = false;
+
+                snapshot.forEach(userSnapshot => {
+                    const user = userSnapshot.val();
+                    if (user.name === name) {
+                        isNameTaken = true;
+                    }
+                    if (user.phoneNumber === fullPhoneNumber) {
+                        isPhoneNumberTaken = true;
+                    }
+                });
+
+                if (isNameTaken) {
+                    showNotification('تم استخدام هذا اللقب من قبل');
+                    return;
+                }
+
+                if (isPhoneNumberTaken) {
+                    showNotification('تم استخدام هذا الرقم من قبل');
+                    return;
+                }
+
+                if (validatePhoneNumber(fullPhoneNumber, countryCode)) {
+                    const userId = Date.now();
+                    const userCode = generateUserCode();
+                    const newUser = {
+                        name: name,
+                        phoneNumber: fullPhoneNumber,
+                        role: 'مستخدم',
+                        code: userCode,
+                        ruble: 0,
+                        referrer: referrerName,
+                        referrals: 0,
+                        purchases: []
+                    };
+
+                    database.ref('users/' + userId).set(newUser).then(() => {
+                        if (referrerName !== '') {
+                            updateReferrer(referrerName);
+                        }
+                    });
+                    showUserCode(userCode);
+                } else {
+                    showNotification('رقم الهاتف غير صحيح');
+                }
+            });
+        }
+
+        function validatePhoneNumber(phoneNumber, countryCode) {
+            const length = phoneNumber.length - countryCode.length;
+            const countryLengths = {
+                "+20": 11,
+                "+966": 9,
+                "+971": 9,
+                "+962": 9,
+                "+961": 8,
+                "+970": 10,
+                "+965": 8,
+                "+968": 8,
+                "+973": 8,
+                "+213": 9,
+                "+212": 10,
+                "+216": 8,
+                "+218": 9,
+                "+249": 10,
+                "+222": 8,
+                "+967": 9
+            };
+            return length === countryLengths[countryCode];
+        }
+
+        function generateUserCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        function showUserCode(userCode) {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>تم تسجيلك بنجاح!</p>
+                <p>كودك الشخصي:</p>
+                <div class="code-box" id="userCode">${userCode}</div>
+                <button onclick="copyUserCode()">انسخ هذا الكود واحتفظ به للمتجر</button>
+            `;
+        }
+
+        function copyUserCode() {
+            const userCode = document.getElementById('userCode').innerText;
+            navigator.clipboard.writeText(userCode).then(() => {
+                showNotification('تم نسخ الكود إلى الحافظة');
+                setTimeout(() => {
+                    window.location.href = "https://chat.whatsapp.com/HatCVHgMtR5CZ5gH8Z3Y3E";
+                }, 2000);
+            });
+        }
+
+        function updateReferrer(referrerName) {
+            database.ref('users').orderByChild('name').equalTo(referrerName).once('value', snapshot => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(referrerSnapshot => {
+                        const referrer = referrerSnapshot.val();
+                        const referrerId = referrerSnapshot.key;
+                        const newRuble = referrer.ruble + 2000;
+                        const newReferrals = (referrer.referrals || 0) + 1;
+
+                        database.ref('users/' + referrerId).update({
+                            ruble: newRuble,
+                            referrals: newReferrals
+                        });
+                    });
+                }
+            });
+        }
+
+        function showBackButton() {
+            document.getElementById('back-button').style.display = 'block';
+        }
+
+        function goBack() {
+            if (stepStack.length > 0) {
+                const inputBox = document.getElementById('input-box');
+                inputBox.innerHTML = stepStack.pop();
+            }
+            if (stepStack.length === 0) {
+                document.getElementById('back-button').style.display = 'none';
+            }
+        }
+
+        function loadUsers() {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+            const uniqueUsers = new Set();
+
+            database.ref('users').once('value', snapshot => {
+                snapshot.forEach(userSnapshot => {
+                    const user = userSnapshot.val();
+                    const userId = userSnapshot.key;
+
+                    if (!uniqueUsers.has(userId)) {
+                        uniqueUsers.add(userId);
+                        const userElement = document.createElement('div');
+                        userElement.className = 'user';
+                        userElement.innerHTML = `
+                            <div class="notification-dot" id="dot-${userId}"></div>
+                            ${user.name} - ${user.phoneNumber} - من طرفه: ${user.referrals || 0}
+                            <div class="role-tag" style="display: ${user.role === 'مشرف' ? 'inline-block' : 'none'}">مشرف</div>
+                            <button onclick="showOptions('${userId}', '${user.code}')">خيارات</button>
+                        `;
+                        userList.appendChild(userElement);
+                        checkNewPurchases(userId);
+                    }
+                });
+            });
+        }
+
+        function checkNewPurchases(userId) {
+            database.ref('users/' + userId).once('value', snapshot => {
+                const user = snapshot.val();
+                let hasNewPurchases = false;
+                user.purchases.forEach(purchase => {
+                    if (purchase.status === 'معلق') {
+                        hasNewPurchases = true;
+                    }
+                });
+                if (hasNewPurchases) {
+                    document.getElementById(`dot-${userId}`).style.display = 'block';
+                }
+            });
+        }
+
+        function showOptions(userId, userCode) {
+            const inputBox = document.getElementById('input-box');
+            stepStack.push(inputBox.innerHTML); // حفظ الحالة الحالية
+            inputBox.innerHTML = `
+                <p>اختر إجراء:</p>
+                <button onclick="promoteUser('${userId}')">ترقية</button>
+                <button onclick="deleteUser('${userId}')">حذف</button>
+                <button onclick="copyUserCodeAdmin('${userCode}')">نسخ كوده</button>
+                <button onclick="showUserPurchases('${userId}')">المشتريات</button>
+                <button onclick="goBack()">رجوع</button>
+            `;
+        }
+
+        function promoteUser(userId) {
+            database.ref('users/' + userId).update({ role: 'مشرف' }).then(() => {
+                showNotification('تم ترقية المستخدم بنجاح');
+                setTimeout(() => {
+                    goBack();
+                    loadUsers();
+                }, 2000);
+            }).catch(error => {
+                showNotification('حدث خطأ أثناء ترقية المستخدم');
+            });
+        }
+
+        function deleteUser(userId) {
+            database.ref('users/' + userId).remove().then(() => {
+                showNotification('تم حذف المستخدم بنجاح');
+                setTimeout(() => {
+                    goBack();
+                    loadUsers();
+                }, 2000);
+            }).catch(error => {
+                showNotification('حدث خطأ أثناء حذف المستخدم');
+            });
+        }
+
+        function deleteAllUsers() {
+            if (confirm('هل أنت متأكد أنك تريد حذف جميع المستخدمين؟')) {
+                database.ref('users').remove().then(() => {
+                    showNotification('تم حذف جميع المستخدمين بنجاح');
+                    loadUsers();
+                }).catch(error => {
+                    showNotification('حدث خطأ أثناء حذف المستخدمين');
+                });
+            }
+        }
+
+        function copyUserCodeAdmin(userCode) {
+            navigator.clipboard.writeText(userCode).then(() => {
+                showNotification('تم نسخ الكود إلى الحافظة');
+            });
+        }
+
+        function showStoreInput() {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>الرجاء إدخال كودك:</p>
+                <input type="text" id="userCodeInput" placeholder="كود المستخدم">
+                <button onclick="verifyUserCode()">تحقق</button>
+            `;
+        }
+
+        function verifyUserCode() {
+            const userCode = document.getElementById('userCodeInput').value.trim();
+            if (userCode === '') {
+                showNotification('الرجاء إدخال كود صحيح');
+                return;
+            }
+
+            database.ref('users').orderByChild('code').equalTo(userCode).once('value', snapshot => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(userSnapshot => {
+                        const user = userSnapshot.val();
+                        showStorePanel(userSnapshot.key, user);
+                    });
+                } else {
+                    showNotification('كود غير صحيح');
+                }
+            });
+        }
+
+        function showStorePanel(userId, user) {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>مرحبا ${user.name}</p>
+                <p>روبل: ${user.ruble}</p>
+                <button onclick="confirmBuy('changeName', '${userId}', ${user.ruble})">تغيير اللقب مقابل 50000 روبل</button>
+                <button onclick="confirmBuy('buyAdmin', '${userId}', ${user.ruble})">شراء مشرف لمده اسبوع مقابل 600000 روبل</button>
+                <button onclick="confirmBuy('buyFakeRank1', '${userId}', ${user.ruble})">شراء رتبة فيك ليوم مقابل 100000 روبل</button>
+                <button onclick="confirmBuy('buyFakeRank7', '${userId}', ${user.ruble})">شراء رتبة فيك لأسبوع مقابل 200000 روبل</button>
+                <button onclick="confirmBuy('changeGroupImage1', '${userId}', ${user.ruble})">تغيير صورة النقابة ليوم مقابل 300000 روبل</button>
+                <button onclick="confirmBuy('changeGroupImage7', '${userId}', ${user.ruble})">تغيير صورة النقابة لأسبوع مقابل 400000 روبل</button>
+                <button onclick="confirmBuy('buyAdmin2', '${userId}', ${user.ruble})">شراء مشرف لمده شهر مقابل 800000 روبل</button>
+                <button onclick="confirmBuy('buyAdmin3', '${userId}', ${user.ruble})">شراء مشرف اساسي مقابل 1500000 روبل</button>
+            `;
+        }
+
+        function confirmBuy(action, userId, userRuble) {
+            currentPurchase = { action, userId, userRuble };
+            showConfirmation('هل أنت متأكد من الشراء؟');
+        }
+
+        function showConfirmation(message) {
+            const confirmation = document.getElementById('confirmation');
+            document.getElementById('confirmation-message').textContent = message;
+            confirmation.classList.remove('hidden');
+        }
+
+        function confirmPurchase(confirm) {
+            const confirmation = document.getElementById('confirmation');
+            confirmation.classList.add('hidden');
+            if (confirm && currentPurchase) {
+                const { action, userId, userRuble } = currentPurchase;
+                if (action === 'changeName') {
+                    showChangeName(userId, userRuble);
+                } else if (action === 'buyAdmin3') {
+                    addPurchase(userId, "مشرف اساسي", 1500000, 999999);
+                } else if (action === 'buyAdmin2') {
+                    addPurchase(userId, "مشرف لمده شهر", 600000, 30);
+                } else if (action === 'buyAdmin') {
+                    addPurchase(userId, "مشرف لمده اسبوع", 600000, 7);
+                } else if (action === 'buyFakeRank1') {
+                    addPurchase(userId, `رتبة فيك لمدة 1 يوم`, 100000, 1);
+                } else if (action === 'buyFakeRank7') {
+                    addPurchase(userId, `رتبة فيك لمدة 7 أيام`, 200000, 7);
+                } else if (action === 'changeGroupImage1') {
+                    addPurchase(userId, `تغيير صورة النقابة لمدة 1 يوم`, 300000, 1);
+                } else if (action === 'changeGroupImage7') {
+                    addPurchase(userId, `تغيير صورة النقابة لمدة 7 أيام`, 400000, 7);
+                }
+                currentPurchase = null;
+            }
+        }
+
+        function addPurchase(userId, item, cost, days) {
+            const endTime = days > 0 ? Date.now() + days * 24 * 60 * 60 * 1000 : null;
+            const newPurchase = { item, cost, startTime: Date.now(), endTime, status: 'معلق' };
+
+            database.ref('users/' + userId).once('value', snapshot => {
+                const user = snapshot.val();
+                user.purchases = user.purchases || [];
+                user.purchases.push(newPurchase);
+
+                database.ref('users/' + userId).update({ purchases: user.purchases }).then(() => {
+                    showNotification('تمت العملية بنجاح. يرجى انتظار موافقة المشرف.');
+                    setTimeout(() => {
+                        showStorePanel(userId, user);
+                    }, 2000);
+                    checkNewPurchases(userId);
+                });
+            });
+        }
+
+        function showChangeName(userId, userRuble) {
+            if (userRuble < 50000) {
+                showNotification('ليس لديك رصيد كافي');
+                return;
+            }
+
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>الرجاء إدخال اللقب الجديد:</p>
+                <input type="text" id="newUserName" placeholder="اللقب الجديد">
+                <button onclick="changeUserName('${userId}', ${userRuble})">تأكيد</button>
+                <button onclick="goBack()">رجوع</button>
+            `;
+        }
+
+        function changeUserName(userId, userRuble) {
+            const newUserName = document.getElementById('newUserName').value.trim();
+            if (newUserName === '') {
+                showNotification('اللقب لا يمكن أن يكون فارغاً');
+                return;
+            }
+
+            database.ref('users').once('value', snapshot => {
+                let isNameTaken = false;
+                snapshot.forEach(userSnapshot => {
+                    const user = userSnapshot.val();
+                    if (user.name === newUserName) {
+                        isNameTaken = true;
+                    }
+                });
+
+                if (isNameTaken) {
+                    showNotification('تم استخدام هذا اللقب من قبل');
+                    return;
+                }
+
+                database.ref('users/' + userId).update({ 
+                    name: newUserName, 
+                    ruble: userRuble - 50000 
+                }).then(() => {
+                    showNotification('تم تغيير اللقب بنجاح');
+                    setTimeout(() => {
+                        showStorePanel(userId, { name: newUserName, ruble: userRuble - 50000 });
+                    }, 2000);
+                });
+            });
+        }
+
+        function showUserPurchases(userId) {
+            const inputBox = document.getElementById('input-box');
+            stepStack.push(inputBox.innerHTML);
+            inputBox.innerHTML = '<p>المشتريات:</p>';
+
+            database.ref('users/' + userId).once('value', snapshot => {
+                const user = snapshot.val();
+                user.purchases.forEach(purchase => {
+                    if (purchase.status === 'مرفوض') return; // لا تعرض العناصر المرفوضة
+
+                    const purchaseItem = document.createElement('div');
+                    purchaseItem.className = 'purchase-item';
+                    const remainingTime = purchase.endTime ? Math.max(0, purchase.endTime - Date.now()) : null;
+                    const statusText = remainingTime === 0 ? 'منتهي' : purchase.status;
+                    let remainingTimeText = '';
+                    if (remainingTime > 0) {
+                        const days = Math.floor(remainingTime / (24 * 60 * 60 * 1000));
+                        const hours = Math.floor((remainingTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                        const minutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
+                        const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
+                        remainingTimeText = `${days} يوم و ${hours} ساعة و ${minutes} دقيقة و ${seconds} ثانية`;
+                    }
+
+                    purchaseItem.innerHTML = `
+                        ${purchase.item} - ${statusText}
+                        ${remainingTimeText ? `<div class="remaining-time">${remainingTimeText}</div>` : ''}
+                        ${statusText === 'معلق' ? `
+                            <button onclick="approvePurchase('${userId}', '${purchase.item}', ${purchase.cost})">موافق</button>
+                            <button onclick="rejectPurchase('${userId}', '${purchase.item}')">رفض</button>
+                        ` : ''}
+                    `;
+
+                    inputBox.appendChild(purchaseItem);
+
+                    // تحديث العد التنازلي كل ثانية
+                    if (statusText === 'موافق' && remainingTime > 0) {
+                        setInterval(() => {
+                            const currentTime = Math.max(0, purchase.endTime - Date.now());
+                            const days = Math.floor(currentTime / (24 * 60 * 60 * 1000));
+                            const hours = Math.floor((currentTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                            const minutes = Math.floor((currentTime % (60 * 60 * 1000)) / (60 * 1000));
+                            const seconds = Math.floor((currentTime % (60 * 1000)) / 1000);
+                            remainingTimeText = `${days} يوم و ${hours} ساعة و ${minutes} دقيقة و ${seconds} ثانية`;
+                            purchaseItem.querySelector('.remaining-time').textContent = remainingTimeText;
+                        }, 1000);
+                    }
+                });
+
+                document.getElementById(`dot-${userId}`).style.display = 'none'; // إخفاء النقطة الحمراء
+
+                const backButton = document.createElement('button');
+                backButton.innerText = 'رجوع';
+                backButton.onclick = () => { goBack(); stepStack.pop(); };
+                inputBox.appendChild(backButton);
+            });
+        }
+
+        function approvePurchase(userId, item, cost) {
+            updatePurchaseStatus(userId, item, 'موافق', cost);
+        }
+
+        function rejectPurchase(userId, item) {
+            updatePurchaseStatus(userId, item, 'مرفوض');
+        }
+
+        function updatePurchaseStatus(userId, item, status, cost = 0) {
+            database.ref('users/' + userId).once('value', snapshot => {
+                const user = snapshot.val();
+                user.purchases = user.purchases.filter(purchase => purchase.item !== item); // إزالة العنصر المرفوض
+                if (status === 'موافق') {
+                    user.purchases.push({
+                        item,
+                        cost,
+                        startTime: Date.now(),
+                        endTime: Date.now() + (24 * 60 * 60 * 1000), // 1 يوم
+                        status
+                    });
+                    user.ruble -= cost;
+                }
+
+                database.ref('users/' + userId).update({ purchases: user.purchases, ruble: user.ruble }).then(() => {
+                    showNotification('تم تحديث حالة الشراء');
+                    setTimeout(() => {
+                        showUserPurchases(userId);
+                    }, 2000);
+                });
+            });
+        }
+
+        function showBankLogin() {
+            stepStack.push(document.getElementById('input-box').innerHTML);
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>الرجاء إدخال كلمة مرور البنك:</p>
+                <input type="password" id="bankPassword" placeholder="كلمة المرور">
+                <button onclick="checkBankPassword()">تحقق</button>
+            `;
+            showBackButton();
+        }
+
+        function checkBankPassword() {
+            const password = document.getElementById('bankPassword').value;
+            if (password === 'starb123') {
+                showBankPanel();
+            } else {
+                showNotification('كلمة مرور غير صحيحة');
+            }
+        }
+
+        function showBankPanel() {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>لوحة تحكم البنك</p>
+                <div id="bankUserList" class="user-list"></div>
+            `;
+            showBackButton();
+            loadBankUsers();
+        }
+
+        function loadBankUsers() {
+            const userList = document.getElementById('bankUserList');
+            userList.innerHTML = '';
+            database.ref('users').once('value', snapshot => {
+                snapshot.forEach(userSnapshot => {
+                    const user = userSnapshot.val();
+                    const userId = userSnapshot.key;
+                    const userElement = document.createElement('div');
+                    userElement.className = 'user';
+                    userElement.innerHTML = `
+                        ${user.name} - ${user.phoneNumber} - روبل: ${user.ruble || 0}
+                        <button onclick="showAddRuble('${userId}')">إضافة روبل</button>
+                        <button onclick="showEditRuble('${userId}')">تعديل روبل</button>
+                    `;
+                    userList.appendChild(userElement);
+                });
+            });
+        }
+
+        function showAddRuble(userId) {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>إضافة روبل للمستخدم</p>
+                <input type="number" id="addRubleAmount" placeholder="كمية الروبل">
+                <button onclick="addRuble('${userId}')">إضافة</button>
+                <button onclick="goBack()">رجوع</button>
+            `;
+        }
+
+        function addRuble(userId) {
+            const amount = parseInt(document.getElementById('addRubleAmount').value, 10);
+            if (isNaN(amount)) {
+                showNotification('يرجى إدخال كمية صالحة');
+                return;
+            }
+
+            database.ref('users/' + userId).once('value', snapshot => {
+                const user = snapshot.val();
+                const newRubleAmount = (user.ruble || 0) + amount;
+                database.ref('users/' + userId).update({ ruble: newRubleAmount }).then(() => {
+                    showNotification('تم إضافة الروبل بنجاح');
+                    setTimeout(() => {
+                        showBankPanel();
+                    }, 2000);
+                });
+            });
+        }
+
+        function showEditRuble(userId) {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>تعديل كمية الروبل للمستخدم</p>
+                <input type="number" id="editRubleAmount" placeholder="كمية الروبل الجديدة">
+                <button onclick="editRuble('${userId}')">تعديل</button>
+                <button onclick="goBack()">رجوع</button>
+            `;
+        }
+
+        function editRuble(userId) {
+            const amount = parseInt(document.getElementById('editRubleAmount').value, 10);
+            if (isNaN(amount)) {
+                showNotification('يرجى إدخال كمية صالحة');
+                return;
+            }
+
+            database.ref('users/' + userId).update({ ruble: amount }).then(() => {
+                showNotification('تم تعديل الروبل بنجاح');
+                setTimeout(() => {
+                    showBankPanel();
+                }, 2000);
+            });
+        }
+
+        function showDeveloperLogin() {
+            stepStack.push(document.getElementById('input-box').innerHTML);
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>الرجاء إدخال كلمة مرور المطور:</p>
+                <input type="password" id="developerPassword" placeholder="كلمة المرور">
+                <button onclick="checkDeveloperPassword()">تحقق</button>
+            `;
+            showBackButton();
+        }
+
+        function checkDeveloperPassword() {
+            const password = document.getElementById('developerPassword').value;
+            if (password === 'zeref') {
+                showDeveloperPanel();
+            } else {
+                showNotification('كلمة مرور غير صحيحة');
+            }
+        }
+
+        function showDeveloperPanel() {
+            const inputBox = document.getElementById('input-box');
+            inputBox.innerHTML = `
+                <p>لوحة تحكم المطور</p>
+                <button onclick="exportUsers()">تصدير بيانات المستخدمين</button>
+                <button onclick="importUsers()">استيراد بيانات المستخدمين</button>
+                <button onclick="backupDatabase()">نسخ احتياطي للبيانات</button>
+                <button onclick="restoreDatabase()">استعادة البيانات من النسخ الاحتياطي</button>
+                <button onclick="viewLogs()">عرض السجلات</button>
+                <button onclick="clearLogs()">مسح السجلات</button>
+                <button onclick="viewAnalytics()">عرض التحليلات</button>
+                <button onclick="sendNotification()">إرسال إشعار</button>
+                <button onclick="manageSettings()">إدارة الإعدادات</button>
+                <button onclick="updateCode()">تحديث الكود</button>
+                <button onclick="monitorPerformance()">مراقبة الأداء</button>
+                <button onclick="viewErrorReports()">عرض تقارير الأخطاء</button>
+                <button onclick="manageRoles()">إدارة الأدوار</button>
+                <button onclick="addAdmin()">إضافة مشرف</button>
+                <button onclick="removeAdmin()">إزالة مشرف</button>
+                <button onclick="viewUserActivity()">عرض نشاط المستخدمين</button>
+                <button onclick="resetPasswords()">إعادة تعيين كلمات المرور</button>
+                <button onclick="managePermissions()">إدارة الأذونات</button>
+                <button onclick="optimizeDatabase()">تحسين قاعدة البيانات</button>
+                <button onclick="goBack()">رجوع</button>
+            `;
+            showBackButton();
+        }
+
+        function exportUsers() {
+            // تصدير بيانات المستخدمين
+        }
+
+        function importUsers() {
+            // استيراد بيانات المستخدمين
+        }
+
+        function backupDatabase() {
+            // نسخ احتياطي للبيانات
+        }
+
+        function restoreDatabase() {
+            // استعادة البيانات من النسخ الاحتياطي
+        }
+
+        function viewLogs() {
+            // عرض السجلات
+        }
+
+        function clearLogs() {
+            // مسح السجلات
+        }
+
+        function viewAnalytics() {
+            // عرض التحليلات
+        }
+
+        function sendNotification() {
+            // إرسال إشعار
+        }
+
+        function manageSettings() {
+            // إدارة الإعدادات
+        }
+
+        function updateCode() {
+            // تحديث الكود
+        }
+
+        function monitorPerformance() {
+            // مراقبة الأداء
+        }
+
+        function viewErrorReports() {
+            // عرض تقارير الأخطاء
+        }
+
+        function manageRoles() {
+            // إدارة الأدوار
+        }
+
+        function addAdmin() {
+            // إضافة مشرف
+        }
+
+        function removeAdmin() {
+            // إزالة مشرف
+        }
+
+        function viewUserActivity() {
+            // عرض نشاط المستخدمين
+        }
+
+        function resetPasswords() {
+            // إعادة تعيين كلمات المرور
+        }
+
+        function managePermissions() {
+            // إدارة الأذونات
+        }
+
+        function optimizeDatabase() {
+            // تحسين قاعدة البيانات
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notification-message').textContent = message;
+            notification.classList.remove('hidden');
+        }
+
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('hidden');
+        }
+    </script>
+
+    <!-- تعطيل النقر بزر الفأرة الأيمن ومفاتيح الاختصار -->
+    <script>
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F12' || 
+                (event.ctrlKey && event.shiftKey && event.key === 'I') || 
+                (event.ctrlKey && event.shiftKey && event.key === 'J') || 
+                (event.ctrlKey && event.key === 'U')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+    <!-- إضافة CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self' 'unsafe-inline'">
+</body>
+</html>
